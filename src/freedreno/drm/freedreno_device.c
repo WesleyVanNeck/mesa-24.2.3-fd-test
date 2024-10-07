@@ -71,7 +71,7 @@ fd_device_new(int fd)
    if (version && !strcmp(version->name, "msm")) {
       DEBUG_MSG("msm DRM device");
       if (version->version_major != 1) {
-         printt("unsupported version: %u.%u.%u\n", version->version_major,
+         printf("unsupported version: %u.%u.%u\n", version->version_major,
                    version->version_minor, version->version_patchlevel);
          goto out;
       }
