@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "util/os_file.h"
 #include "util/u_process.h"
@@ -63,22 +64,22 @@ fd_device_new(int fd)
 #ifdef HAVE_LIBDRM
    version = drmGetVersion(fd);
    if (!version) {
-      printf("cannot get version: %s\n", strerror(errno));
-      return NULL;
+      printf("cannot get version: %s\n, try default config", strerror(errno));
+      const char *cenv = getenv("MESA_LOADER_DRIVER_OVERRIDE");
    }
 #endif
+   printf("MESA_LOADER_DRIVER_OVERRIDE: %s\n", cenv);
 
-   if (version && !strcmp(version->name, "msm")) {
+   if (!strcmp(cenv, "msm")) {
       DEBUG_MSG("msm DRM device");
       if (version->version_major != 1) {
          printf("unsupported version: %u.%u.%u\n", version->version_major,
                    version->version_minor, version->version_patchlevel);
-         goto out;
       }
 
       dev = msm_device_new(fd);
 #ifdef HAVE_FREEDRENO_VIRTIO
-   } else if (version && !strcmp(version->name, "virtio")) {
+   } else if (!strcmp(cenv, "virtio")) {
       printf("virtio_gpu DRM device\n");
       dev = virtio_device_new(fd);
       /* Only devices that support a hypervisor are a6xx+, so avoid the
