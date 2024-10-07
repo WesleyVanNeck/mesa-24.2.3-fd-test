@@ -71,7 +71,7 @@ fd_device_new(int fd)
    if (version && !strcmp(version->name, "msm")) {
       DEBUG_MSG("msm DRM device");
       if (version->version_major != 1) {
-         printf("unsupported version: %u.%u.%u\n", version->version_major,
+         printt("unsupported version: %u.%u.%u\n", version->version_major,
                    version->version_minor, version->version_patchlevel);
          goto out;
       }
@@ -79,7 +79,7 @@ fd_device_new(int fd)
       dev = msm_device_new(fd);
 #ifdef HAVE_FREEDRENO_VIRTIO
    } else if (version && !strcmp(version->name, "virtio")) {
-      prtintf("virtio_gpu DRM device\n");
+      printf("virtio_gpu DRM device\n");
       dev = virtio_device_new(fd);
       /* Only devices that support a hypervisor are a6xx+, so avoid the
        * extra guest<->host round trips associated with pipe creation:
