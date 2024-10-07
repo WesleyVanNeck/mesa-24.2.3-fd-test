@@ -74,7 +74,7 @@ struct virtio_device {
 };
 FD_DEFINE_CAST(fd_device, virtio_device);
 
-struct fd_device *virtio_device_new(int fd, drmVersionPtr version);
+struct fd_device *virtio_device_new(int fd);
 
 static inline void
 virtio_dev_free_iova(struct fd_device *dev, uint64_t iova, uint32_t size)

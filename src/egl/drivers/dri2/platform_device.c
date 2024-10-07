@@ -293,7 +293,7 @@ device_probe_device(_EGLDisplay *disp)
     * For now, just fallback to kms_swrast. */
    if (disp->Options.ForceSoftware && !request_software &&
        (strcmp(dri2_dpy->driver_name, "vgem") == 0 ||
-        strcmp(dri2_dpy->driver_name, "virtio_gpu") == 0)) {
+        strcmp(dri2_dpy->driver_name, "virtio") == 0)) {
       free(dri2_dpy->driver_name);
       _eglLog(_EGL_WARNING, "NEEDS EXTENSION: falling back to kms_swrast");
       dri2_dpy->driver_name = strdup("kms_swrast");

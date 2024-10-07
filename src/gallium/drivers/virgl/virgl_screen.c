@@ -1161,7 +1161,7 @@ virgl_create_screen(struct virgl_winsys *vws, const struct pipe_screen_config *c
    virgl_debug = debug_get_option_virgl_debug();
 
    if (config && config->options) {
-      driParseConfigFiles(config->options, config->options_info, 0, "virtio_gpu",
+      driParseConfigFiles(config->options, config->options_info, 0, "virtio",
                           NULL, NULL, NULL, 0, NULL, 0);
 
       screen->tweak_gles_emulate_bgra =

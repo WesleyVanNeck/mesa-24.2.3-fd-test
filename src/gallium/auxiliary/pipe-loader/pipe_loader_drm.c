@@ -173,7 +173,7 @@ pipe_loader_drm_probe_fd_nodup(struct pipe_loader_device **dev, int fd, bool zin
       ddev->base.driver_name = strdup("radeonsi");
    }
 
-   if (strcmp(ddev->base.driver_name, "virtio_gpu") == 0) {
+   if (strcmp(ddev->base.driver_name, "virtio") == 0) {
       struct virgl_renderer_capset_drm caps;
       if (get_nctx_caps(fd, &caps) == 0) {
 #ifdef GALLIUM_STATIC_TARGETS

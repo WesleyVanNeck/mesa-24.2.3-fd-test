@@ -59,7 +59,7 @@ jobs:
             -Dosmesa=true \
             -Dvulkan-drivers= \
             -Dgallium-drivers=panfrost,freedreno,zink \
-            -Dfreedreno-kmds=kgsl,msm \
+            -Dfreedreno-kmds=kgsl,msm,virtio \
             -Dshared-glapi=false \
             -Dbuildtype=release
           ninja -C "build-android" install

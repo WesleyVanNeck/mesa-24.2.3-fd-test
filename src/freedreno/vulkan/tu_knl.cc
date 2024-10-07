@@ -298,7 +298,7 @@ tu_physical_device_try_create(struct vk_instance *vk_instance,
    struct tu_instance *instance =
       container_of(vk_instance, struct tu_instance, vk);
 
-   /* Note that "msm" is a platform device, but "virtio_gpu" is a pci
+   /* Note that "msm" is a platform device, but "virtio" is a pci
     * device.  In general we shouldn't care about the bus type.
     */
    if (!(drm_device->available_nodes & (1 << DRM_NODE_RENDER)))
@@ -331,7 +331,7 @@ tu_physical_device_try_create(struct vk_instance *vk_instance,
 #ifdef TU_HAS_MSM
       result = tu_knl_drm_msm_load(instance, fd, version, &device);
 #endif
-   } else if (strcmp(version->name, "virtio_gpu") == 0) {
+   } else if (strcmp(version->name, "virtio") == 0) {
 #ifdef TU_HAS_VIRTIO
       result = tu_knl_drm_virtio_load(instance, fd, version, &device);
 #endif

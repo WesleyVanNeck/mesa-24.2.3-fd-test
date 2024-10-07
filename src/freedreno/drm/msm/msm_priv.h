@@ -45,7 +45,7 @@ struct msm_device {
 };
 FD_DEFINE_CAST(fd_device, msm_device);
 
-struct fd_device *msm_device_new(int fd, drmVersionPtr version);
+struct fd_device *msm_device_new(int fd);
 
 struct msm_pipe {
    struct fd_pipe base;

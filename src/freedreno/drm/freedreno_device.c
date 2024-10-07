@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <stdio.h>
 
 #include "util/os_file.h"
 #include "util/u_process.h"
@@ -37,9 +38,9 @@
 #include "freedreno_drm_perfetto.h"
 #include "freedreno_priv.h"
 
-struct fd_device *msm_device_new(int fd, drmVersionPtr version);
+struct fd_device *msm_device_new(int fd);
 #ifdef HAVE_FREEDRENO_VIRTIO
-struct fd_device *virtio_device_new(int fd, drmVersionPtr version);
+struct fd_device *virtio_device_new(int fd);
 #endif
 
 #ifdef HAVE_FREEDRENO_KGSL
@@ -62,7 +63,7 @@ fd_device_new(int fd)
 #ifdef HAVE_LIBDRM
    version = drmGetVersion(fd);
    if (!version) {
-      ERROR_MSG("cannot get version: %s", strerror(errno));
+      printf("cannot get version: %s\n", strerror(errno));
       return NULL;
    }
 #endif
@@ -70,16 +71,16 @@ fd_device_new(int fd)
    if (version && !strcmp(version->name, "msm")) {
       DEBUG_MSG("msm DRM device");
       if (version->version_major != 1) {
-         ERROR_MSG("unsupported version: %u.%u.%u", version->version_major,
+         printf("unsupported version: %u.%u.%u\n", version->version_major,
                    version->version_minor, version->version_patchlevel);
          goto out;
       }
 
-      dev = msm_device_new(fd, version);
+      dev = msm_device_new(fd);
 #ifdef HAVE_FREEDRENO_VIRTIO
-   } else if (version && !strcmp(version->name, "virtio_gpu")) {
-      DEBUG_MSG("virtio_gpu DRM device");
-      dev = virtio_device_new(fd, version);
+   } else if (version && !strcmp(version->name, "virtio")) {
+      prtintf("virtio_gpu DRM device\n");
+      dev = virtio_device_new(fd);
       /* Only devices that support a hypervisor are a6xx+, so avoid the
        * extra guest<->host round trips associated with pipe creation:
        */
@@ -175,7 +176,7 @@ fd_device_open(void)
    fd = drmOpenWithType("msm", NULL, DRM_NODE_RENDER);
 #ifdef HAVE_FREEDRENO_VIRTIO
    if (fd < 0)
-      fd = drmOpenWithType("virtio_gpu", NULL, DRM_NODE_RENDER);
+      fd = drmOpenWithType("virtio", NULL, DRM_NODE_RENDER);
 #endif
    if (fd < 0)
       return NULL;

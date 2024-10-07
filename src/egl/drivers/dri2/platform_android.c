@@ -986,7 +986,7 @@ droid_load_driver(_EGLDisplay *disp, bool swrast)
        * are unavailable since 6c5ab.
        */
       if (strcmp(dri2_dpy->driver_name, "vgem") == 0 ||
-          strcmp(dri2_dpy->driver_name, "virtio_gpu") == 0) {
+          strcmp(dri2_dpy->driver_name, "virtio") == 0) {
          free(dri2_dpy->driver_name);
          dri2_dpy->driver_name = strdup("kms_swrast");
       } else {

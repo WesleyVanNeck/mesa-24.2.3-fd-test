@@ -213,7 +213,7 @@ dri_loader_get_extensions(const char *driver_name)
 #endif
 
 #if defined(HAVE_VIRGL) || (defined(HAVE_FREEDRENO) && !defined(PIPE_LOADER_DYNAMIC))
-   if (!strcmp(driver_name, "virtio_gpu"))
+   if (!strcmp(driver_name, "virtio"))
       return __driDriverGetExtensions_virtio_gpu();
 #endif
 

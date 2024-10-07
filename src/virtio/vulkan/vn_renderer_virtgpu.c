@@ -1586,7 +1586,7 @@ virtgpu_open_device(struct virtgpu *gpu, const drmDevicePtr dev)
    }
 
    drmVersionPtr version = drmGetVersion(fd);
-   if (!version || strcmp(version->name, "virtio_gpu") ||
+   if (!version || strcmp(version->name, "virtio") ||
        version->version_major != 0) {
       if (VN_DEBUG(INIT)) {
          if (version) {

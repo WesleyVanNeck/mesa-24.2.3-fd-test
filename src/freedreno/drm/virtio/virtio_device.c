@@ -112,7 +112,7 @@ set_debuginfo(struct fd_device *dev)
 }
 
 struct fd_device *
-virtio_device_new(int fd, drmVersionPtr version)
+virtio_device_new(int fd)
 {
    struct virgl_renderer_capset_drm caps;
    struct virtio_device *virtio_dev;
@@ -135,19 +135,7 @@ virtio_device_new(int fd, drmVersionPtr version)
 
    caps = vdrm->caps;
 
-   INFO_MSG("wire_format_version: %u", caps.wire_format_version);
-   INFO_MSG("version_major:       %u", caps.version_major);
-   INFO_MSG("version_minor:       %u", caps.version_minor);
-   INFO_MSG("version_patchlevel:  %u", caps.version_patchlevel);
-   INFO_MSG("has_cached_coherent: %u", caps.u.msm.has_cached_coherent);
-   INFO_MSG("va_start:            0x%0"PRIx64, caps.u.msm.va_start);
-   INFO_MSG("va_size:             0x%0"PRIx64, caps.u.msm.va_size);
-   INFO_MSG("gpu_id:              %u", caps.u.msm.gpu_id);
-   INFO_MSG("gmem_size:           %u", caps.u.msm.gmem_size);
-   INFO_MSG("gmem_base:           0x%0" PRIx64, caps.u.msm.gmem_base);
-   INFO_MSG("chip_id:             0x%0" PRIx64, caps.u.msm.chip_id);
-   INFO_MSG("max_freq:            %u", caps.u.msm.max_freq);
-
+#ifdef VIRTIO_VERSION
    if (caps.wire_format_version != 2) {
       ERROR_MSG("Unsupported protocol version: %u", caps.wire_format_version);
       goto error;
@@ -163,6 +151,7 @@ virtio_device_new(int fd, drmVersionPtr version)
       ERROR_MSG("No address space");
       goto error;
    }
+#endif
 
    virtio_dev = calloc(1, sizeof(*virtio_dev));
    if (!virtio_dev)
@@ -171,7 +160,7 @@ virtio_device_new(int fd, drmVersionPtr version)
    dev = &virtio_dev->base;
    dev->funcs = &funcs;
    dev->fd = fd;
-   dev->version = caps.version_minor;
+   dev->version = FD_VERSION_ROBUSTNESS;
    dev->has_cached_coherent = caps.u.msm.has_cached_coherent;
 
    p_atomic_set(&virtio_dev->next_blob_id, 1);

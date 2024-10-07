@@ -258,7 +258,7 @@ surfaceless_probe_device(_EGLDisplay *disp, bool swrast, bool zink)
           * feature complete than swrast.
           */
          if (driver_name && (strcmp(driver_name, "vgem") == 0 ||
-                             strcmp(driver_name, "virtio_gpu") == 0))
+                             strcmp(driver_name, "virtio") == 0))
             dri2_dpy->driver_name = strdup("kms_swrast");
          free(driver_name);
       } else {

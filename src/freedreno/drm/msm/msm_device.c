@@ -46,7 +46,7 @@ static const struct fd_device_funcs funcs = {
 };
 
 struct fd_device *
-msm_device_new(int fd, drmVersionPtr version)
+msm_device_new(int fd)
 {
    struct msm_device *msm_dev;
    struct fd_device *dev;
@@ -61,8 +61,9 @@ msm_device_new(int fd, drmVersionPtr version)
 
    dev = &msm_dev->base;
    dev->funcs = &funcs;
-   dev->version = version->version_minor;
+   dev->version = FD_VERSION_ROBUSTNESS;
 
+#ifdef MSM_VERSION
    if (version->version_minor >= FD_VERSION_CACHED_COHERENT) {
       struct drm_msm_gem_new new_req = {
          .size = os_page_size,
@@ -83,6 +84,7 @@ msm_device_new(int fd, drmVersionPtr version)
          dev->has_cached_coherent = true;
       }
    }
+#endif
 
    dev->bo_size = sizeof(struct msm_bo);
 
