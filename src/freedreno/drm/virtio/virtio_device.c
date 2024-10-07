@@ -49,8 +49,8 @@ virtio_handle_from_dmabuf(struct fd_device *dev, int fd)
    return vdrm_dmabuf_to_handle(virtio_dev->vdrm, fd);
 }
 
-static void
-virtio_close_handle(struct fd_bo *bo)
+void
+virtio_close_handle(struct fd_bo *bo, uint32_t handle)
 {
    struct virtio_device *virtio_dev = to_virtio_device(bo->dev);
 

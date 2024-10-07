@@ -156,6 +156,7 @@ FD_DEFINE_CAST(fd_bo, virtio_bo);
 struct fd_bo *virtio_bo_new(struct fd_device *dev, uint32_t size, uint32_t flags);
 struct fd_bo *virtio_bo_from_handle(struct fd_device *dev, uint32_t size,
                                     uint32_t handle);
+void virtio_close_handle(struct fd_bo *bo, uint32_t handle);
 
 /*
  * Internal helpers:
