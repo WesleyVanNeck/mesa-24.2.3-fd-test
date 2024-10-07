@@ -64,18 +64,15 @@ fd_device_new(int fd)
 #ifdef HAVE_LIBDRM
    version = drmGetVersion(fd);
    if (!version) {
-      printf("cannot get version: %s\n, try default config", strerror(errno));
-      const char *cenv = getenv("MESA_LOADER_DRIVER_OVERRIDE");
+      printf("cannot get version: %s, try default config\n", strerror(errno));
    }
 #endif
+   const char *cenv = getenv("MESA_LOADER_DRIVER_OVERRIDE");
    printf("MESA_LOADER_DRIVER_OVERRIDE: %s\n", cenv);
 
    if (!strcmp(cenv, "msm")) {
       DEBUG_MSG("msm DRM device");
-      if (version->version_major != 1) {
-         printf("unsupported version: %u.%u.%u\n", version->version_major,
-                   version->version_minor, version->version_patchlevel);
-      }
+      printf("unsupported version: error, try other option\n");
 
       dev = msm_device_new(fd);
 #ifdef HAVE_FREEDRENO_VIRTIO
