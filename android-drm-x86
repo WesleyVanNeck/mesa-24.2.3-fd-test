@@ -12,8 +12,8 @@ pkgconfig = ['env', 'PKG_CONFIG_LIBDIR=.', '/usr/bin/pkg-config']
 
 [host_machine]
 system = 'linux'
-cpu_family = 'x86_64'
-cpu = 'amd64'
+cpu_family = 'x86'
+cpu = 'i686'
 
 # ik this is wrong but workaround sanity check
 # cpu_family = 'arm'
