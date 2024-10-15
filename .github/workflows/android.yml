@@ -67,9 +67,6 @@ jobs:
 
       - name: striping
         run: |
-          if [ "${{matrix.arch}}" == "arm32" ]; then
-          llvm-strip --strip-unneeded /tmp/mesa/lib/libOSMesa_8.so
-          else
           llvm-strip --strip-unneeded /tmp/mesa/lib/libOSMesa_8.so
       - name: Upload libraries
         uses: actions/upload-artifact@v4
